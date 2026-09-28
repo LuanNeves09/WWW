@@ -1,0 +1,12 @@
+# Caches e arquivos de importação do Godot
+.godot/
+.import/
+*.tmp
+
+# Dependências e logs do Node-RED
+node_modules/
+*.log
+
+# Caches do sistema operacional
+.DS_Store
+Thumbs.db

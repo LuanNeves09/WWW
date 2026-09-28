@@ -1,0 +1,1501 @@
+[
+    {
+        "id": "850174177bb9a33d",
+        "type": "tab",
+        "label": "Open Industry SCADA",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e431be0a0c69731c",
+        "type": "ui_button",
+        "z": "850174177bb9a33d",
+        "name": "Botão Start",
+        "group": "e07f112df34a1ee6",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "INICIAR LINHA DE PRODUÇÃO",
+        "tooltip": "Inicia a esteira principal",
+        "color": "#ffffff",
+        "bgcolor": "#28a745",
+        "icon": "play_arrow",
+        "payload": "CMD,BELT_ON",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "dd2eadfd7d9ec40b"
+            ]
+        ]
+    },
+    {
+        "id": "b7ce88f41d70ce61",
+        "type": "ui_button",
+        "z": "850174177bb9a33d",
+        "name": "Emergência",
+        "group": "e07f112df34a1ee6",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "PARADA DE EMERGÊNCIA",
+        "tooltip": "Desliga todos os atuadores imediatamente",
+        "color": "#ffffff",
+        "bgcolor": "#dc3545",
+        "icon": "stop",
+        "payload": "STATE_LED_OFF",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "059e1c45304f09e9",
+                "c4f5c23d16ce7399",
+                "d939676f6093540b",
+                "482644a95d32fb09"
+            ]
+        ]
+    },
+    {
+        "id": "d939676f6093540b",
+        "type": "ui_toast",
+        "z": "850174177bb9a33d",
+        "position": "top right",
+        "displayTime": "4",
+        "highlight": "#dc3545",
+        "sendall": false,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "PARADA SOLICITADA",
+        "name": "Alerta Emergência",
+        "x": 770,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "482644a95d32fb09",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "PickLight Red",
+        "func": "msg.payload = 0;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "264b3aaff3a26e97"
+            ]
+        ]
+    },
+    {
+        "id": "264b3aaff3a26e97",
+        "type": "ui_template",
+        "z": "850174177bb9a33d",
+        "group": "eead9f1b3d1b5c4d",
+        "name": "Torre PickLight Visual",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "format": "<div style=\"text-align: center; padding: 12px; background-color: #1a1a24; border-radius: 8px; border: 1px solid #333;\"><h4 style=\"color: #ccc; margin-top:0; margin-bottom: 12px; font-size: 15px;\">Sinaleiro de Bancada (PickLight)</h4><div style=\"display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 12px;\"><div style=\"width: 38px; height: 38px; border-radius: 50%; border: 2px solid #444; background-color: {{msg.payload == 0 ? '#ff3333' : '#330000'}}; box-shadow: {{msg.payload == 0 ? '0 0 18px #ff3333' : 'none'}};\"></div><div style=\"width: 38px; height: 38px; border-radius: 50%; border: 2px solid #444; background-color: {{msg.payload == 2 ? '#ffcc00' : '#332b00'}}; box-shadow: {{msg.payload == 2 ? '0 0 18px #ffcc00' : 'none'}};\"></div><div style=\"width: 38px; height: 38px; border-radius: 50%; border: 2px solid #444; background-color: {{msg.payload == 1 ? '#00e676' : '#003311'}}; box-shadow: {{msg.payload == 1 ? '0 0 18px #00e676' : 'none'}};\"></div></div><div style=\"font-size: 15px; font-weight: bold; color: {{msg.payload == 1 ? '#00e676' : (msg.payload == 2 ? '#ffcc00' : '#ff3333')}};\">{{msg.payload == 1 ? '🟢 LINHA LIBERADA / MESA EM 0°' : (msg.payload == 2 ? '🟡 PROCESSANDO DESVIO' : '🔴 LINHA BLOQUEADA / PARADA')}}</div></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1400,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c19fef654d35cb97",
+        "type": "ui_gauge",
+        "z": "850174177bb9a33d",
+        "name": "Ângulo da Mesa",
+        "group": "8fad718261309ffa",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Giro da Mesa Rotativa",
+        "label": "Graus (°)",
+        "format": "{{value}}°",
+        "min": 0,
+        "max": "90",
+        "colors": [
+            "#00b5ad",
+            "#2185d0",
+            "#e03924"
+        ],
+        "seg1": "30",
+        "seg2": "60",
+        "className": "",
+        "x": 1320,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "2514bcab91379aa2",
+        "type": "ui_template",
+        "z": "850174177bb9a33d",
+        "group": "9ef4840a706c4707",
+        "name": "KPI Cartão Caixas",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "format": "<div style=\"text-align: center; padding: 15px; background-color: #1a1a24; border-radius: 8px; border: 1px solid #333;\"><div style=\"font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 1px;\">Total de Caixas Desviadas</div><div style=\"font-size: 36px; font-weight: bold; color: #00e676; margin: 8px 0;\">📦 {{msg.payload || 0}}</div><div style=\"font-size: 12px; color: #888;\">",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 2170,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "932105f8d3a4f97a",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Incrementa Contador",
+        "func": "let count = flow.get('total_boxes_diverted') || 0;\ncount++;\nflow.set('total_boxes_diverted', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1940,
+        "y": 1200,
+        "wires": [
+            [
+                "2514bcab91379aa2"
+            ]
+        ]
+    },
+    {
+        "id": "2423e1825298616c",
+        "type": "ui_text",
+        "z": "850174177bb9a33d",
+        "group": "8fad718261309ffa",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "name": "Status da Esteira",
+        "label": "Estado Operacional: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1850,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "38ee96b67a98e7d3",
+        "type": "ui_text",
+        "z": "850174177bb9a33d",
+        "group": "8fad718261309ffa",
+        "order": 3,
+        "width": "6",
+        "height": "1",
+        "name": "Status Sensor",
+        "label": "Sensor Ótico de Entrada: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 920,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "845096506a2cc583",
+        "type": "ui_slider",
+        "z": "850174177bb9a33d",
+        "name": "Velocidade Esteira",
+        "label": "Ajuste de Velocidade (Esteira Principal)",
+        "tooltip": "",
+        "group": "4726725bdce7e598",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "outs": "end",
+        "min": 0,
+        "max": 2,
+        "step": "0.1",
+        "className": "",
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "cd4fd7252e7a5131"
+            ]
+        ]
+    },
+    {
+        "id": "cd4fd7252e7a5131",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Set Speed Float",
+        "func": "const speed = parseFloat(msg.payload);\nconst buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(speed, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "9de337e1e641f03b"
+            ]
+        ]
+    },
+    {
+        "id": "9de337e1e641f03b",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Speed",
+        "topic": "belt_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 910,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "acabfd0e775e5506",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed On",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(1, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "9de337e1e641f03b",
+                "10539fa3b4ad4efb",
+                "97c09bda0f675e27"
+            ]
+        ]
+    },
+    {
+        "id": "c4f5c23d16ce7399",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed Off",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 560,
+        "wires": [
+            [
+                "66911c22779b9af6",
+                "4792097322d32f1c"
+            ]
+        ]
+    },
+    {
+        "id": "c850c775e0277ea8",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Rool Belt Write Speed On",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0.3, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 1000,
+        "wires": [
+            [
+                "33505131a35018ad",
+                "2f209694b4dc4d3a"
+            ]
+        ]
+    },
+    {
+        "id": "33505131a35018ad",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Roll Speed",
+        "topic": "roll_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1060,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "a7148e1efdc78d83",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "led_color",
+        "topic": "led_color",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1240,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "91417a92f04560c0",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Led Yellow",
+        "func": "msg.payload = 2;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 880,
+        "wires": [
+            [
+                "a7148e1efdc78d83",
+                "264b3aaff3a26e97"
+            ]
+        ]
+    },
+    {
+        "id": "8e53c1a6e7949da4",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "led_color",
+        "topic": "led_color",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1360,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "10539fa3b4ad4efb",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Led Green",
+        "func": "msg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 160,
+        "wires": [
+            [
+                "8e53c1a6e7949da4",
+                "264b3aaff3a26e97"
+            ]
+        ]
+    },
+    {
+        "id": "dbe504f3dc659215",
+        "type": "mqtt in",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "topic": "sensor_status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2dfcd434d6addbd6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 880,
+        "wires": [
+            [
+                "eab572c3b2db7b00"
+            ]
+        ]
+    },
+    {
+        "id": "eab572c3b2db7b00",
+        "type": "switch",
+        "z": "850174177bb9a33d",
+        "name": "Activated",
+        "property": "payload[0]",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 280,
+        "y": 880,
+        "wires": [
+            [
+                "c788d95df31dca13",
+                "8b9e0a3dfcdd577b"
+            ],
+            [
+                "2dd0b87c2a913619",
+                "14b62d18d8b87335",
+                "28e97a4976eb7b19",
+                "a5951dfe8843300a",
+                "c814a4dd331075bb"
+            ]
+        ]
+    },
+    {
+        "id": "8b9e0a3dfcdd577b",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Set Sensor Free",
+        "func": "flow.set(\"sensor_occupied\", false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 680,
+        "wires": [
+            [
+                "e264e70ec5b93855"
+            ]
+        ]
+    },
+    {
+        "id": "a5951dfe8843300a",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Set Sensor Occupied",
+        "func": "flow.set(\"sensor_occupied\", true);\nflow.set(\"rotation_done\", false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2dd0b87c2a913619",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Sensor ON Text",
+        "func": "msg.payload = \"📦 Caixa Detectada na Entrada\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 920,
+        "wires": [
+            [
+                "38ee96b67a98e7d3"
+            ]
+        ]
+    },
+    {
+        "id": "c3083063280d3316",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Rotate Roll Belt 90°",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(90, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 1160,
+        "wires": [
+            [
+                "c08f59f1ea634a7c",
+                "87f2984581abf2fc",
+                "4bb1294fe1776cac"
+            ]
+        ]
+    },
+    {
+        "id": "4bb1294fe1776cac",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Gauge 90°",
+        "func": "msg.payload = 90;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 1220,
+        "wires": [
+            [
+                "c19fef654d35cb97"
+            ]
+        ]
+    },
+    {
+        "id": "6bb683591ceff183",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Gauge 0°",
+        "func": "msg.payload = 0;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 1300,
+        "wires": [
+            [
+                "c19fef654d35cb97"
+            ]
+        ]
+    },
+    {
+        "id": "c08f59f1ea634a7c",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "angle",
+        "topic": "angle",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1090,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "39b92c77a5ee4344",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "UI Status Amarelo",
+        "func": "msg.payload = \"🟡 PROCESSANDO DESVIO PARA BANCADA\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1550,
+        "y": 880,
+        "wires": [
+            [
+                "2423e1825298616c"
+            ]
+        ]
+    },
+    {
+        "id": "cad80a8f011ac372",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "UI Status Verde",
+        "func": "msg.payload = \"🟢 LINHA LIVRE / AGUARDANDO PRÓXIMA CAIXA\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1700,
+        "y": 140,
+        "wires": [
+            [
+                "2423e1825298616c"
+            ]
+        ]
+    },
+    {
+        "id": "8bb5ef6e1cef703d",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "UI Status Parado",
+        "func": "msg.payload = \"🔴 LINHA EM EMERGÊNCIA\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 440,
+        "wires": [
+            [
+                "2423e1825298616c"
+            ]
+        ]
+    },
+    {
+        "id": "b38018a6fafd6d78",
+        "type": "serial out",
+        "z": "850174177bb9a33d",
+        "name": "Arduino",
+        "serial": "5a906eb3f06383c6",
+        "x": 1680,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "97c09bda0f675e27",
+        "type": "change",
+        "z": "850174177bb9a33d",
+        "name": "STATE_LED_GREEN",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "STATE_LED_GREEN",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 80,
+        "wires": [
+            [
+                "cad80a8f011ac372",
+                "1c109e17cd59789e"
+            ]
+        ]
+    },
+    {
+        "id": "6b9f76c34659c996",
+        "type": "serial in",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "serial": "config_serial_arduino",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "dd2eadfd7d9ec40b"
+            ]
+        ]
+    },
+    {
+        "id": "dd2eadfd7d9ec40b",
+        "type": "switch",
+        "z": "850174177bb9a33d",
+        "name": "CMD,BELT_ON",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "CMD,BELT_ON",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 220,
+        "wires": [
+            [
+                "acabfd0e775e5506"
+            ]
+        ]
+    },
+    {
+        "id": "1c109e17cd59789e",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "250",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1480,
+        "y": 80,
+        "wires": [
+            [
+                "b38018a6fafd6d78"
+            ]
+        ]
+    },
+    {
+        "id": "6fca426e98d3dc8b",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "250",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1540,
+        "y": 820,
+        "wires": [
+            [
+                "b38018a6fafd6d78"
+            ]
+        ]
+    },
+    {
+        "id": "c814a4dd331075bb",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1060,
+        "wires": [
+            [
+                "c850c775e0277ea8"
+            ]
+        ]
+    },
+    {
+        "id": "2f209694b4dc4d3a",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1040,
+        "y": 1060,
+        "wires": [
+            [
+                "962dfe2aa91fd040"
+            ]
+        ]
+    },
+    {
+        "id": "962dfe2aa91fd040",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed Off",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 1060,
+        "wires": [
+            [
+                "0686302af2b76a0b",
+                "43da9a82237b83b8"
+            ]
+        ]
+    },
+    {
+        "id": "14b62d18d8b87335",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 560,
+        "wires": [
+            [
+                "c4f5c23d16ce7399"
+            ]
+        ]
+    },
+    {
+        "id": "0686302af2b76a0b",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 720,
+        "y": 1160,
+        "wires": [
+            [
+                "c3083063280d3316"
+            ]
+        ]
+    },
+    {
+        "id": "87f2984581abf2fc",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1240,
+        "y": 1160,
+        "wires": [
+            [
+                "014b050ccbe80986"
+            ]
+        ]
+    },
+    {
+        "id": "059e1c45304f09e9",
+        "type": "change",
+        "z": "850174177bb9a33d",
+        "name": "STATE_LED_OFF",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "STATE_LED_OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 500,
+        "wires": [
+            [
+                "8bb5ef6e1cef703d",
+                "6fca426e98d3dc8b"
+            ]
+        ]
+    },
+    {
+        "id": "43da9a82237b83b8",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Roll Speed",
+        "topic": "roll_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1440,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "0e1d657541fac324",
+        "type": "link in",
+        "z": "850174177bb9a33d",
+        "name": "Led Green",
+        "links": [
+            "e29fa4986c924a15"
+        ],
+        "x": 475,
+        "y": 120,
+        "wires": [
+            [
+                "acabfd0e775e5506"
+            ]
+        ]
+    },
+    {
+        "id": "b3743c5f9ae8eba2",
+        "type": "link in",
+        "z": "850174177bb9a33d",
+        "name": "Led Yellow",
+        "links": [
+            "66911c22779b9af6"
+        ],
+        "x": 805,
+        "y": 840,
+        "wires": [
+            [
+                "91417a92f04560c0",
+                "28e97a4976eb7b19"
+            ]
+        ]
+    },
+    {
+        "id": "66911c22779b9af6",
+        "type": "link out",
+        "z": "850174177bb9a33d",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "b3743c5f9ae8eba2"
+        ],
+        "x": 905,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4792097322d32f1c",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Speed",
+        "topic": "belt_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 910,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c788d95df31dca13",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Sensor OFF Text",
+        "func": "msg.payload = \"🟢 Entrada Livre\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 740,
+        "wires": [
+            [
+                "38ee96b67a98e7d3"
+            ]
+        ]
+    },
+    {
+        "id": "28e97a4976eb7b19",
+        "type": "change",
+        "z": "850174177bb9a33d",
+        "name": "STATE_LED_YELLOW",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "STATE_LED_YELLOW",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 800,
+        "wires": [
+            [
+                "39b92c77a5ee4344",
+                "6fca426e98d3dc8b"
+            ]
+        ]
+    },
+    {
+        "id": "014b050ccbe80986",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Rool Belt Write Speed On",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0.3, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 1160,
+        "wires": [
+            [
+                "f19915bb461df69f",
+                "0e3449beb0185072"
+            ]
+        ]
+    },
+    {
+        "id": "f19915bb461df69f",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Roll Speed",
+        "topic": "roll_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1720,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "0e3449beb0185072",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1700,
+        "y": 1240,
+        "wires": [
+            [
+                "0ad11c83b6e9b386",
+                "bcbe7246adae9eae",
+                "932105f8d3a4f97a"
+            ]
+        ]
+    },
+    {
+        "id": "0ad11c83b6e9b386",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed Off",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1920,
+        "y": 1280,
+        "wires": [
+            [
+                "e898bad55f637c85"
+            ]
+        ]
+    },
+    {
+        "id": "e898bad55f637c85",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Roll Speed",
+        "topic": "roll_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 2140,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "bc5b0d49e7b14d51",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "angle",
+        "topic": "angle",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1550,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "bcbe7246adae9eae",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Rotate Roll Belt 0°",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 1380,
+        "wires": [
+            [
+                "bc5b0d49e7b14d51",
+                "6bb683591ceff183"
+            ]
+        ]
+    },
+    {
+        "id": "a43055ffd602d366",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Set Rotation Done",
+        "func": "flow.set(\"rotation_done\", true);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 680,
+        "wires": [
+            [
+                "e264e70ec5b93855"
+            ]
+        ]
+    },
+    {
+        "id": "e264e70ec5b93855",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Valida Verde",
+        "func": "let sensorOccupied = flow.get(\"sensor_occupied\");\nlet rotationDone = flow.get(\"rotation_done\");\n\nif (sensorOccupied === false && rotationDone === true) {\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 680,
+        "wires": [
+            [
+                "e29fa4986c924a15"
+            ]
+        ]
+    },
+    {
+        "id": "55cc679f965cb772",
+        "type": "link out",
+        "z": "850174177bb9a33d",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "a43055ffd602d366"
+        ],
+        "x": 1675,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "e29fa4986c924a15",
+        "type": "link out",
+        "z": "850174177bb9a33d",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "0e1d657541fac324"
+        ],
+        "x": 1075,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "90bc8bd71b1bc235",
+        "type": "delay",
+        "z": "850174177bb9a33d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1560,
+        "y": 1380,
+        "wires": [
+            [
+                "55cc679f965cb772"
+            ]
+        ]
+    },
+    {
+        "id": "e07f112df34a1ee6",
+        "type": "ui_group",
+        "name": "Comando e Operação",
+        "tab": "97c40c519b765f1d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "eead9f1b3d1b5c4d",
+        "type": "ui_group",
+        "name": "PickLight - Bancada Laranja",
+        "tab": "97c40c519b765f1d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "8fad718261309ffa",
+        "type": "ui_group",
+        "name": "Status em Tempo Real",
+        "tab": "97c40c519b765f1d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9ef4840a706c4707",
+        "type": "ui_group",
+        "name": "Métricas de Produção (KPIs)",
+        "tab": "97c40c519b765f1d",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "4726725bdce7e598",
+        "type": "ui_group",
+        "name": "Ajuste de Parâmetros / Manual",
+        "tab": "97c40c519b765f1d",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "2dfcd434d6addbd6",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5a906eb3f06383c6",
+        "type": "serial-port",
+        "name": "Arduino Nano",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\r\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "config_serial_arduino",
+        "type": "serial-port",
+        "name": "Arduino Uno / Nano",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "97c40c519b765f1d",
+        "type": "ui_tab",
+        "name": "Supervisório Industrial",
+        "icon": "dashboard",
+        "order": 1
+    }
+]

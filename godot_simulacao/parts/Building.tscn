@@ -1,0 +1,265 @@
+[gd_scene format=3 uid="uid://dyhvoundu2kqc"]
+
+[ext_resource type="MeshLibrary" uid="uid://cwdqkx8ftt4xp" path="res://assets/MeshLibs/Floor_Library.meshlib" id="2_iohv4"]
+[ext_resource type="MeshLibrary" uid="uid://cla2sf14oaubw" path="res://assets/MeshLibs/Wall_Library.meshlib" id="3_3d0q8"]
+[ext_resource type="MeshLibrary" uid="uid://btk8jgts5fcrl" path="res://assets/MeshLibs/Roof_Library.meshlib" id="4_5rwsc"]
+[ext_resource type="PackedScene" uid="uid://dm55h6ap605bw" path="res://parts/BeltConveyor.tscn" id="6_wl2ud"]
+[ext_resource type="Script" uid="uid://dfskhbqfkklts" path="res://src/Conveyor/belt_segment.gd" id="7_gjblw"]
+[ext_resource type="PackedScene" uid="uid://bx0t0ttuepnbm" path="res://parts/TurntableConveyor.tscn" id="8_aojuq"]
+[ext_resource type="PackedScene" uid="uid://drle8i15nwr68" path="res://parts/StackLight.tscn" id="9_l2ohu"]
+[ext_resource type="Script" uid="uid://bl7o7avq4pi78" path="res://src/StackLight/stack_light_data.gd" id="10_gkc1h"]
+[ext_resource type="Script" uid="uid://buet0tp11gjdl" path="res://src/StackLight/stack_segment_data.gd" id="11_17mhe"]
+[ext_resource type="PackedScene" uid="uid://gddgyvex6gdj" path="res://parts/PushButton.tscn" id="12_gkc1h"]
+[ext_resource type="PackedScene" uid="uid://co2mqmdwpn57w" path="res://parts/BoxSpawner.tscn" id="12_l2ohu"]
+[ext_resource type="PackedScene" uid="uid://kdpe7o4ec1fa" path="res://parts/DiffuseSensor.tscn" id="13_gkc1h"]
+[ext_resource type="PackedScene" uid="uid://bl73u0rvt2orv" path="res://parts/Despawner.tscn" id="14_17mhe"]
+[ext_resource type="PackedScene" uid="uid://dnfh8k7yxm3vo" path="res://parts/Rack.tscn" id="14_qq6t7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+
+[sub_resource type="Sky" id="Sky_sky"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_ijpc5"]
+background_mode = 2
+sky = SubResource("Sky_sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.72, 0.75, 0.8, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 4
+tonemap_exposure = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rm06n"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bv1le"]
+material = SubResource("StandardMaterial3D_rm06n")
+
+[sub_resource type="Resource" id="Resource_l2ohu"]
+resource_local_to_scene = true
+script = ExtResource("7_gjblw")
+length = 3.99414832658342
+metadata/_belt_conveyor_owner = 1758470411370
+
+[sub_resource type="Resource" id="Resource_gkc1h"]
+resource_local_to_scene = true
+resource_name = "Red"
+script = ExtResource("11_17mhe")
+segment_color = Color(0, 0.70980394, 0.2509804, 0.5019608)
+
+[sub_resource type="Resource" id="Resource_17mhe"]
+resource_local_to_scene = true
+resource_name = "Yellow"
+script = ExtResource("11_17mhe")
+active = true
+segment_color = Color(0.8261162, 0.8774972, 0, 0.5019608)
+
+[sub_resource type="Resource" id="Resource_qq6t7"]
+resource_local_to_scene = true
+resource_name = "Green"
+script = ExtResource("11_17mhe")
+segment_color = Color(1, 0.2449362, 0.2239379, 0.5019608)
+
+[sub_resource type="Resource" id="Resource_3rn1u"]
+resource_local_to_scene = true
+script = ExtResource("10_gkc1h")
+segment_datas = [SubResource("Resource_gkc1h"), SubResource("Resource_17mhe"), SubResource("Resource_qq6t7")]
+
+[node name="Building" type="Node3D" unique_id=183560046]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2028685564]
+environment = SubResource("Environment_ijpc5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1612400929]
+transform = Transform3D(0.70710677, 0.57921094, -0.40560412, 0, 0.57361084, 0.819128, 0.70710677, -0.57921094, 0.40560412, 0, 0, 0)
+light_energy = 0.7
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 4294967289
+shadow_enabled = true
+shadow_opacity = 0.6
+shadow_blur = 0.5
+shadow_caster_mask = 4294967289
+directional_shadow_max_distance = 66.51315
+sky_mode = 1
+
+[node name="DirectionalFill" type="DirectionalLight3D" parent="." unique_id=1612400930]
+transform = Transform3D(-0.7071, -0.5, 0.5, 0, 0.7071, 0.7071, -0.7071, 0.5, -0.5, 0, 0, 0)
+light_energy = 0.5
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 4294967289
+directional_shadow_max_distance = 66.51315
+sky_mode = 1
+
+[node name="DirectionalWallA" type="DirectionalLight3D" parent="." unique_id=1612400931]
+transform = Transform3D(0.70710677, 0.57921094, -0.40560412, 0, 0.57361084, 0.819128, 0.70710677, -0.57921094, 0.40560412, 0, 0, 0)
+light_energy = 0.5
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 2
+shadow_enabled = true
+shadow_opacity = 0.6
+shadow_blur = 0.5
+shadow_caster_mask = 2
+directional_shadow_mode = 0
+directional_shadow_max_distance = 50.0
+sky_mode = 1
+
+[node name="DirectionalWallB" type="DirectionalLight3D" parent="." unique_id=1612400932]
+transform = Transform3D(-0.7071, -0.5, 0.5, 0, 0.7071, 0.7071, -0.7071, 0.5, -0.5, 0, 0, 0)
+light_energy = 0.5
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 4
+shadow_enabled = true
+shadow_opacity = 0.6
+shadow_blur = 0.5
+shadow_caster_mask = 4
+directional_shadow_mode = 0
+directional_shadow_max_distance = 50.0
+sky_mode = 1
+
+[node name="DirectionalWallAFill" type="DirectionalLight3D" parent="." unique_id=1612400933]
+transform = Transform3D(-0.7071, -0.5, 0.5, 0, 0.7071, 0.7071, -0.7071, 0.5, -0.5, 0, 0, 0)
+light_energy = 0.3
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 2
+directional_shadow_max_distance = 66.51315
+sky_mode = 1
+
+[node name="DirectionalWallBFill" type="DirectionalLight3D" parent="." unique_id=1612400934]
+transform = Transform3D(0.70710677, 0.57921094, -0.40560412, 0, 0.57361084, 0.819128, 0.70710677, -0.57921094, 0.40560412, 0, 0, 0)
+light_energy = 0.3
+light_volumetric_fog_energy = 0.0
+light_specular = 0.2
+light_cull_mask = 4
+directional_shadow_max_distance = 66.51315
+sky_mode = 1
+
+[node name="Floor" type="GridMap" parent="." unique_id=1032330647]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+mesh_library = ExtResource("2_iohv4")
+cell_size = Vector3(10, 10, 10)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+collision_mask = 8
+data = {
+"cells": PackedInt32Array(65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65535, 1, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="WallsA" type="GridMap" parent="." unique_id=1289864612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+mesh_library = ExtResource("3_3d0q8")
+cell_size = Vector3(10, 6, 10)
+cell_octant_size = 6
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+render_layers = 2
+data = {
+"cells": PackedInt32Array(65534, 65534, 3, 65535, 65534, 1, 1, 65534, 1, 2, 65534, 3, 3, 65534, 1441792, 3, 65535, 1441795, 3, 0, 1441795, 3, 1, 1441792, 196606, 65534, 2, 196607, 65534, 2, 131072, 65534, 2, 131073, 65534, 2, 131074, 65534, 2, 131075, 65534, 1441794, 131075, 65535, 1441794, 131075, 0, 1441794, 131075, 1, 1441794, 196611, 65534, 1441794, 196611, 65535, 1441794, 196611, 0, 1441794, 196611, 1, 1441794)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="WallsB" type="GridMap" parent="." unique_id=1289864613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+mesh_library = ExtResource("3_3d0q8")
+cell_size = Vector3(10, 6, 10)
+cell_octant_size = 6
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+render_layers = 4
+data = {
+"cells": PackedInt32Array(65535, 2, 655363, 0, 2, 655361, 1, 2, 655363, 2, 2, 655361, 3, 2, 655363, 65534, 65535, 1048576, 65534, 0, 1048579, 65534, 1, 1048579, 65534, 2, 1048576, 196607, 2, 655362, 131072, 2, 655362, 131073, 2, 655362, 131074, 2, 655362, 131075, 2, 655362, 196606, 65535, 1048578, 196606, 0, 1048578, 196606, 1, 1048578, 196606, 2, 1048578, 262142, 65535, 1048578, 262142, 0, 1048578, 262142, 1, 1048578, 262142, 2, 1048578)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Roof" type="GridMap" parent="." unique_id=1331643088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+mesh_library = ExtResource("4_5rwsc")
+cell_size = Vector3(10, 9, 10)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(196606, 65534, 0, 196607, 65534, 0, 131072, 65534, 0, 131073, 65534, 0, 131074, 65534, 0, 196607, 2, 655360, 131072, 2, 655360, 131073, 2, 655360, 131074, 2, 655360, 131075, 2, 655360, 196606, 65535, 1, 196606, 0, 1, 196607, 65535, 1, 196607, 0, 1, 131072, 65535, 1, 131072, 0, 1, 131073, 65535, 1, 131073, 0, 1, 131074, 65535, 1, 131074, 0, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 2, 0)
+
+[node name="DockDoors" type="Node3D" parent="." unique_id=299569443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="ThumbnailMesh" type="MeshInstance3D" parent="." unique_id=299569442]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("BoxMesh_bv1le")
+metadata/_edit_lock_ = true
+
+[node name="BeltConveyor" parent="." unique_id=360974384 instance=ExtResource("6_wl2ud")]
+transform = Transform3D(0.9999107, 0, -0.013365923, 0, 1, 0, 0.013365923, 0, 0.9999107, -2.2844667, 2.4800887, 0.1249962)
+segments = Array[ExtResource("7_gjblw")]([SubResource("Resource_l2ohu")])
+speed = 0.0
+enable_comms = true
+speed_tag_group_name = "TagGroup0"
+speed_tag_name = "belt_speed"
+running_tag_group_name = "TagGroup0"
+size = Vector3(4.4941483, 0.5, 1.524)
+metadata/hijack_scale = true
+metadata/_snap_transform = Callable()
+
+[node name="StackLight" parent="." unique_id=1223138583 instance=ExtResource("9_l2ohu")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.6006846, 2.4385324, 1.1057943)
+tag_group_name = "TagGroup0"
+light_value = 2
+segments = 3
+_data = SubResource("Resource_3rn1u")
+"Light 3" = SubResource("Resource_qq6t7")
+"Light 2" = SubResource("Resource_17mhe")
+"Light 1" = SubResource("Resource_gkc1h")
+tag_name = "led_color"
+
+[node name="PushButton" parent="." unique_id=1216453833 instance=ExtResource("12_gkc1h")]
+transform = Transform3D(0.423729, 0, 0, 0, 0.423729, 0, 0, 0, 0.423729, -0.9508556, 2.4675908, 0.9131437)
+enable_comms = true
+pushbutton_tag_group_name = "TagGroup0"
+pushbutton_tag_name = "spawn_box"
+lamp_tag_group_name = "TagGroup0"
+
+[node name="BoxSpawner" parent="." unique_id=1009593353 node_paths=PackedStringArray("conveyor") instance=ExtResource("12_l2ohu")]
+transform = Transform3D(1, 2.30012e-09, -9.31322e-10, -2.30012e-09, 1, 8.84756e-09, 9.31322e-10, -8.84756e-09, 1, -0.21510732, 2.7261028, 0.02877307)
+boxes_per_minute = 20
+conveyor = NodePath("../BeltConveyor")
+metadata/hijack_scale = true
+
+[node name="TurntableConveyor" parent="." unique_id=39041698 instance=ExtResource("8_aojuq")]
+transform = Transform3D(0.9999107, 0, -0.013365923, 0, 1, 0, 0.013365923, 0, 0.9999107, 3.1022005, 2.4800887, 0.19700041)
+speed = 0.0
+enable_comms = true
+speed_tag_group_name = "TagGroup0"
+speed_tag_name = "roll_speed"
+target_angle_tag_group_name = "TagGroup0"
+target_angle_tag_name = "angle"
+metadata/_snap_transform = Callable()
+
+[node name="Despawner" parent="." unique_id=1495546615 instance=ExtResource("14_17mhe")]
+transform = Transform3D(1.9997579, -0.0153404595, -0.0051566567, 0.030663498, 0.9998768, -0.0067266887, 0.0052592214, 0.0033233862, 1.999982, 3.0035236, 0.34125566, -1.7872641)
+
+[node name="Despawner2" parent="." unique_id=1555326376 instance=ExtResource("14_17mhe")]
+transform = Transform3D(1.9997579, -0.0153404595, -0.0051566567, 0.030663498, 0.9998768, -0.0067266887, 0.0052592214, 0.0033233862, 1.999982, 3.0035236, 0.34125566, 2.4493296)
+
+[node name="DiffuseSensor" parent="." unique_id=1915908865 instance=ExtResource("13_gkc1h")]
+transform = Transform3D(-0.0054500857, 0, -0.1738276, 0, 0.17391299, 0, 0.1738276, 0, -0.0054500857, 4.5347834, 2.4965098, 0.3023286)
+max_range = 2.3260002517700196
+enable_comms = true
+tag_group_name = "TagGroup0"
+tag_name = "sensor_status"
+metadata/_snap_transform = Callable()
+
+[node name="Rack" parent="." unique_id=1912774211 instance=ExtResource("14_qq6t7")]
+transform = Transform3D(-0.04714986, 0, -0.99888784, 0, 1, 0, 0.99888784, 0, -0.04714986, 5.1911063, -3.9749012, 0.08459878)
+size = Vector3(2.8, 6.4, 1.4)

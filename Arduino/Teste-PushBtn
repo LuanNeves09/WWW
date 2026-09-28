@@ -1,0 +1,76 @@
+// Definição dos Pinos
+const int BTN_START  = 2;   // Botão de Partida na Protoboard
+const int LED_GREEN  = 8;   // LED Verde Físico
+const int LED_YELLOW = 9;   // LED Amarelo Físico
+const int LED_RED    = 10;  // LED Vermelho Físico
+
+// Variáveis de Controle do Debounce
+int lastButtonState = HIGH;
+int currentButtonState = HIGH;
+unsigned long lastDebounceTime = 0;
+const unsigned long debounceDelay = 50; // Tempo em ms para filtro de repique
+
+void setup() {
+  // Inicialização da Comunicação Serial em 9600 baud (Compatível com Node-RED)
+  Serial.begin(9600);
+
+  // Configuração do pino do botão usando Pull-Up interno
+  pinMode(BTN_START, INPUT_PULLUP);
+
+  // Configuração dos Pinos dos LEDs
+  pinMode(LED_GREEN, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  pinMode(LED_RED, OUTPUT);
+
+  // Estado Inicial: Linha em Emergência/Parada (LED Vermelho aceso)
+  digitalWrite(LED_RED, HIGH);
+  digitalWrite(LED_YELLOW, LOW);
+  digitalWrite(LED_GREEN, LOW);
+}
+
+void loop() {
+  // ----------------------------------------------------
+  // 1. LEITURA E TRATAMENTO DO BOTÃO FÍSICO
+  // ----------------------------------------------------
+  int reading = digitalRead(BTN_START);
+
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    if (reading != currentButtonState) {
+      currentButtonState = reading;
+
+      // Pressionou o botão (GND quando pressionado em INPUT_PULLUP)
+      if (currentButtonState == LOW) {
+        Serial.println("CMD,BELT_ON");
+      }
+    }
+  }
+  lastButtonState = reading;
+
+  // ----------------------------------------------------
+  // 2. RECEBIMENTO DE COMANDOS DO NODE-RED VIA SERIAL
+  // ----------------------------------------------------
+  if (Serial.available() > 0) {
+    String command = Serial.readStringUntil('\n');
+    command.trim(); // Remove espaços e quebras de linha
+
+    if (command == "STATE_LED_GREEN") {
+      digitalWrite(LED_GREEN, HIGH);
+      digitalWrite(LED_YELLOW, LOW);
+      digitalWrite(LED_RED, LOW);
+    } 
+    else if (command == "STATE_LED_YELLOW") {
+      digitalWrite(LED_GREEN, LOW);
+      digitalWrite(LED_YELLOW, HIGH);
+      digitalWrite(LED_RED, LOW);
+    } 
+    else if (command == "STATE_LED_OFF") {
+      digitalWrite(LED_GREEN, LOW);
+      digitalWrite(LED_YELLOW, LOW);
+      digitalWrite(LED_RED, HIGH);
+    }
+  }
+}
