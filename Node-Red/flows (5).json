@@ -26,8 +26,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 210,
-        "y": 140,
+        "x": 450,
+        "y": 300,
         "wires": [
             [
                 "dd2eadfd7d9ec40b"
@@ -53,14 +53,15 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 550,
-        "y": 440,
+        "x": 610,
+        "y": 600,
         "wires": [
             [
                 "059e1c45304f09e9",
-                "c4f5c23d16ce7399",
                 "d939676f6093540b",
-                "482644a95d32fb09"
+                "482644a95d32fb09",
+                "c01d2055e81ef7f0",
+                "712ecfbb836bba65"
             ]
         ]
     },
@@ -78,27 +79,28 @@
         "raw": false,
         "topic": "PARADA SOLICITADA",
         "name": "Alerta Emergência",
-        "x": 770,
-        "y": 440,
+        "x": 830,
+        "y": 580,
         "wires": []
     },
     {
         "id": "482644a95d32fb09",
         "type": "function",
         "z": "850174177bb9a33d",
-        "name": "PickLight Red",
-        "func": "msg.payload = 0;\nreturn msg;",
+        "name": "Led Red",
+        "func": "msg.payload = 4;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680,
-        "y": 340,
+        "x": 800,
+        "y": 500,
         "wires": [
             [
-                "264b3aaff3a26e97"
+                "264b3aaff3a26e97",
+                "e80bdd12a2340bb1"
             ]
         ]
     },
@@ -117,8 +119,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1400,
-        "y": 340,
+        "x": 1460,
+        "y": 500,
         "wires": [
             []
         ]
@@ -146,8 +148,8 @@
         "seg1": "30",
         "seg2": "60",
         "className": "",
-        "x": 1320,
-        "y": 1260,
+        "x": 1680,
+        "y": 1440,
         "wires": []
     },
     {
@@ -165,8 +167,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 2170,
-        "y": 1200,
+        "x": 2530,
+        "y": 1380,
         "wires": [
             []
         ]
@@ -183,8 +185,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1940,
-        "y": 1200,
+        "x": 2300,
+        "y": 1380,
         "wires": [
             [
                 "2514bcab91379aa2"
@@ -204,8 +206,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 1850,
-        "y": 440,
+        "x": 1950,
+        "y": 600,
         "wires": []
     },
     {
@@ -221,54 +223,9 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 920,
-        "y": 740,
+        "x": 900,
+        "y": 920,
         "wires": []
-    },
-    {
-        "id": "845096506a2cc583",
-        "type": "ui_slider",
-        "z": "850174177bb9a33d",
-        "name": "Velocidade Esteira",
-        "label": "Ajuste de Velocidade (Esteira Principal)",
-        "tooltip": "",
-        "group": "4726725bdce7e598",
-        "order": 1,
-        "width": "6",
-        "height": "1",
-        "passthru": true,
-        "outs": "end",
-        "min": 0,
-        "max": 2,
-        "step": "0.1",
-        "className": "",
-        "x": 450,
-        "y": 280,
-        "wires": [
-            [
-                "cd4fd7252e7a5131"
-            ]
-        ]
-    },
-    {
-        "id": "cd4fd7252e7a5131",
-        "type": "function",
-        "z": "850174177bb9a33d",
-        "name": "Set Speed Float",
-        "func": "const speed = parseFloat(msg.payload);\nconst buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(speed, 0);\nmsg.payload = buffer;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 680,
-        "y": 280,
-        "wires": [
-            [
-                "9de337e1e641f03b"
-            ]
-        ]
     },
     {
         "id": "9de337e1e641f03b",
@@ -284,8 +241,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 910,
-        "y": 240,
+        "x": 1150,
+        "y": 400,
         "wires": []
     },
     {
@@ -300,8 +257,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680,
-        "y": 220,
+        "x": 920,
+        "y": 380,
         "wires": [
             [
                 "9de337e1e641f03b",
@@ -322,11 +279,10 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
-        "y": 560,
+        "x": 680,
+        "y": 1320,
         "wires": [
             [
-                "66911c22779b9af6",
                 "4792097322d32f1c"
             ]
         ]
@@ -343,8 +299,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 1000,
+        "x": 710,
+        "y": 1180,
         "wires": [
             [
                 "33505131a35018ad",
@@ -366,8 +322,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1060,
-        "y": 1000,
+        "x": 940,
+        "y": 1180,
         "wires": []
     },
     {
@@ -384,8 +340,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1240,
-        "y": 880,
+        "x": 1180,
+        "y": 1120,
         "wires": []
     },
     {
@@ -400,12 +356,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
-        "y": 880,
+        "x": 1010,
+        "y": 1120,
         "wires": [
             [
-                "a7148e1efdc78d83",
-                "264b3aaff3a26e97"
+                "264b3aaff3a26e97",
+                "a7148e1efdc78d83"
             ]
         ]
     },
@@ -423,8 +379,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1360,
-        "y": 160,
+        "x": 1420,
+        "y": 320,
         "wires": []
     },
     {
@@ -439,12 +395,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1190,
-        "y": 160,
+        "x": 1250,
+        "y": 320,
         "wires": [
             [
-                "8e53c1a6e7949da4",
-                "264b3aaff3a26e97"
+                "264b3aaff3a26e97",
+                "8e53c1a6e7949da4"
             ]
         ]
     },
@@ -461,8 +417,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 110,
-        "y": 880,
+        "x": 90,
+        "y": 1060,
         "wires": [
             [
                 "eab572c3b2db7b00"
@@ -491,8 +447,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 280,
-        "y": 880,
+        "x": 260,
+        "y": 1060,
         "wires": [
             [
                 "c788d95df31dca13",
@@ -502,8 +458,8 @@
                 "2dd0b87c2a913619",
                 "14b62d18d8b87335",
                 "28e97a4976eb7b19",
-                "a5951dfe8843300a",
-                "c814a4dd331075bb"
+                "c814a4dd331075bb",
+                "66911c22779b9af6"
             ]
         ]
     },
@@ -519,30 +475,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 680,
+        "x": 520,
+        "y": 860,
         "wires": [
             [
                 "e264e70ec5b93855"
             ]
-        ]
-    },
-    {
-        "id": "a5951dfe8843300a",
-        "type": "function",
-        "z": "850174177bb9a33d",
-        "name": "Set Sensor Occupied",
-        "func": "flow.set(\"sensor_occupied\", true);\nflow.set(\"rotation_done\", false);\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 560,
-        "y": 1000,
-        "wires": [
-            []
         ]
     },
     {
@@ -557,8 +495,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 920,
+        "x": 520,
+        "y": 1020,
         "wires": [
             [
                 "38ee96b67a98e7d3"
@@ -577,8 +515,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 900,
-        "y": 1160,
+        "x": 1260,
+        "y": 1340,
         "wires": [
             [
                 "c08f59f1ea634a7c",
@@ -599,8 +537,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1110,
-        "y": 1220,
+        "x": 1470,
+        "y": 1400,
         "wires": [
             [
                 "c19fef654d35cb97"
@@ -619,8 +557,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1110,
-        "y": 1300,
+        "x": 1470,
+        "y": 1480,
         "wires": [
             [
                 "c19fef654d35cb97"
@@ -641,8 +579,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1090,
-        "y": 1160,
+        "x": 1450,
+        "y": 1340,
         "wires": []
     },
     {
@@ -657,8 +595,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1550,
-        "y": 880,
+        "x": 1750,
+        "y": 680,
         "wires": [
             [
                 "2423e1825298616c"
@@ -677,8 +615,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1700,
-        "y": 140,
+        "x": 1740,
+        "y": 540,
         "wires": [
             [
                 "2423e1825298616c"
@@ -689,7 +627,7 @@
         "id": "8bb5ef6e1cef703d",
         "type": "function",
         "z": "850174177bb9a33d",
-        "name": "UI Status Parado",
+        "name": "UI Status Vermelho",
         "func": "msg.payload = \"🔴 LINHA EM EMERGÊNCIA\";\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -697,8 +635,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1010,
-        "y": 440,
+        "x": 1070,
+        "y": 600,
         "wires": [
             [
                 "2423e1825298616c"
@@ -711,8 +649,8 @@
         "z": "850174177bb9a33d",
         "name": "Arduino",
         "serial": "5a906eb3f06383c6",
-        "x": 1680,
-        "y": 80,
+        "x": 1740,
+        "y": 240,
         "wires": []
     },
     {
@@ -734,8 +672,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1220,
-        "y": 80,
+        "x": 1280,
+        "y": 240,
         "wires": [
             [
                 "cad80a8f011ac372",
@@ -749,8 +687,8 @@
         "z": "850174177bb9a33d",
         "name": "",
         "serial": "config_serial_arduino",
-        "x": 210,
-        "y": 220,
+        "x": 450,
+        "y": 380,
         "wires": [
             [
                 "dd2eadfd7d9ec40b"
@@ -774,8 +712,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 440,
-        "y": 220,
+        "x": 680,
+        "y": 380,
         "wires": [
             [
                 "acabfd0e775e5506"
@@ -799,8 +737,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1480,
-        "y": 80,
+        "x": 1540,
+        "y": 240,
         "wires": [
             [
                 "b38018a6fafd6d78"
@@ -824,8 +762,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1540,
-        "y": 820,
+        "x": 1520,
+        "y": 640,
         "wires": [
             [
                 "b38018a6fafd6d78"
@@ -849,8 +787,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 520,
-        "y": 1060,
+        "x": 500,
+        "y": 1180,
         "wires": [
             [
                 "c850c775e0277ea8"
@@ -874,8 +812,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1040,
-        "y": 1060,
+        "x": 920,
+        "y": 1240,
         "wires": [
             [
                 "962dfe2aa91fd040"
@@ -894,8 +832,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1220,
-        "y": 1060,
+        "x": 1100,
+        "y": 1240,
         "wires": [
             [
                 "0686302af2b76a0b",
@@ -920,8 +858,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 520,
-        "y": 560,
+        "x": 500,
+        "y": 1320,
         "wires": [
             [
                 "c4f5c23d16ce7399"
@@ -945,8 +883,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 720,
-        "y": 1160,
+        "x": 1080,
+        "y": 1340,
         "wires": [
             [
                 "c3083063280d3316"
@@ -970,8 +908,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1240,
-        "y": 1160,
+        "x": 1600,
+        "y": 1340,
         "wires": [
             [
                 "014b050ccbe80986"
@@ -997,8 +935,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 770,
-        "y": 500,
+        "x": 830,
+        "y": 640,
         "wires": [
             [
                 "8bb5ef6e1cef703d",
@@ -1020,8 +958,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1440,
-        "y": 1060,
+        "x": 1320,
+        "y": 1240,
         "wires": []
     },
     {
@@ -1030,10 +968,13 @@
         "z": "850174177bb9a33d",
         "name": "Led Green",
         "links": [
-            "e29fa4986c924a15"
+            "e29fa4986c924a15",
+            "4d644ea284b753ec",
+            "5b5f7396d74ab090",
+            "430a5bacdbd57408"
         ],
-        "x": 475,
-        "y": 120,
+        "x": 715,
+        "y": 280,
         "wires": [
             [
                 "acabfd0e775e5506"
@@ -1048,27 +989,14 @@
         "links": [
             "66911c22779b9af6"
         ],
-        "x": 805,
-        "y": 840,
+        "x": 795,
+        "y": 1100,
         "wires": [
             [
                 "91417a92f04560c0",
                 "28e97a4976eb7b19"
             ]
         ]
-    },
-    {
-        "id": "66911c22779b9af6",
-        "type": "link out",
-        "z": "850174177bb9a33d",
-        "name": "link out 4",
-        "mode": "link",
-        "links": [
-            "b3743c5f9ae8eba2"
-        ],
-        "x": 905,
-        "y": 620,
-        "wires": []
     },
     {
         "id": "4792097322d32f1c",
@@ -1084,8 +1012,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 910,
-        "y": 560,
+        "x": 870,
+        "y": 1320,
         "wires": []
     },
     {
@@ -1100,8 +1028,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 550,
-        "y": 740,
+        "x": 530,
+        "y": 920,
         "wires": [
             [
                 "38ee96b67a98e7d3"
@@ -1127,8 +1055,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 950,
-        "y": 800,
+        "x": 970,
+        "y": 1040,
         "wires": [
             [
                 "39b92c77a5ee4344",
@@ -1141,15 +1069,15 @@
         "type": "function",
         "z": "850174177bb9a33d",
         "name": "Rool Belt Write Speed On",
-        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0.3, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0.4, 0);\nmsg.payload = buffer;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1470,
-        "y": 1160,
+        "x": 1830,
+        "y": 1340,
         "wires": [
             [
                 "f19915bb461df69f",
@@ -1171,8 +1099,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1720,
-        "y": 1160,
+        "x": 2080,
+        "y": 1340,
         "wires": []
     },
     {
@@ -1192,8 +1120,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1700,
-        "y": 1240,
+        "x": 2060,
+        "y": 1420,
         "wires": [
             [
                 "0ad11c83b6e9b386",
@@ -1214,8 +1142,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1920,
-        "y": 1280,
+        "x": 2280,
+        "y": 1460,
         "wires": [
             [
                 "e898bad55f637c85"
@@ -1236,8 +1164,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 2140,
-        "y": 1280,
+        "x": 2500,
+        "y": 1460,
         "wires": []
     },
     {
@@ -1254,8 +1182,8 @@
         "correl": "",
         "expiry": "",
         "broker": "2dfcd434d6addbd6",
-        "x": 1550,
-        "y": 1420,
+        "x": 1910,
+        "y": 1600,
         "wires": []
     },
     {
@@ -1270,8 +1198,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1350,
-        "y": 1380,
+        "x": 1710,
+        "y": 1560,
         "wires": [
             [
                 "bc5b0d49e7b14d51",
@@ -1291,8 +1219,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
-        "y": 680,
+        "x": 730,
+        "y": 860,
         "wires": [
             [
                 "e264e70ec5b93855"
@@ -1311,8 +1239,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 950,
-        "y": 680,
+        "x": 930,
+        "y": 860,
         "wires": [
             [
                 "e29fa4986c924a15"
@@ -1320,15 +1248,15 @@
         ]
     },
     {
-        "id": "55cc679f965cb772",
+        "id": "66911c22779b9af6",
         "type": "link out",
         "z": "850174177bb9a33d",
-        "name": "link out 6",
+        "name": "link out 4",
         "mode": "link",
         "links": [
-            "a43055ffd602d366"
+            "b3743c5f9ae8eba2"
         ],
-        "x": 1675,
+        "x": 455,
         "y": 1380,
         "wires": []
     },
@@ -1339,36 +1267,106 @@
         "name": "link out 7",
         "mode": "link",
         "links": [
-            "0e1d657541fac324"
+            "0e1d657541fac324",
+            "cfbaa6620ee210e2"
         ],
-        "x": 1075,
-        "y": 680,
+        "x": 1055,
+        "y": 860,
         "wires": []
     },
     {
-        "id": "90bc8bd71b1bc235",
-        "type": "delay",
+        "id": "e80bdd12a2340bb1",
+        "type": "mqtt out",
         "z": "850174177bb9a33d",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
+        "name": "led_color",
+        "topic": "led_color",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 980,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c01d2055e81ef7f0",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed Off",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
         "outputs": 1,
-        "x": 1560,
-        "y": 1380,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 700,
         "wires": [
             [
-                "55cc679f965cb772"
+                "281ab2ce057b918e"
             ]
         ]
+    },
+    {
+        "id": "281ab2ce057b918e",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Speed",
+        "topic": "belt_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1010,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "712ecfbb836bba65",
+        "type": "function",
+        "z": "850174177bb9a33d",
+        "name": "Write Speed Off",
+        "func": "const buffer = Buffer.alloc(4);\nbuffer.writeFloatLE(0, 0);\nmsg.payload = buffer;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 760,
+        "wires": [
+            [
+                "c367abd8f6ffe50f"
+            ]
+        ]
+    },
+    {
+        "id": "c367abd8f6ffe50f",
+        "type": "mqtt out",
+        "z": "850174177bb9a33d",
+        "name": "Belt Roll Speed",
+        "topic": "roll_speed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2dfcd434d6addbd6",
+        "x": 1020,
+        "y": 760,
+        "wires": []
     },
     {
         "id": "e07f112df34a1ee6",
@@ -1406,16 +1404,6 @@
         "name": "Métricas de Produção (KPIs)",
         "tab": "97c40c519b765f1d",
         "order": 4,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "4726725bdce7e598",
-        "type": "ui_group",
-        "name": "Ajuste de Parâmetros / Manual",
-        "tab": "97c40c519b765f1d",
-        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
